@@ -6,7 +6,10 @@ param(
 
   # Explicit opt-in for a MAJOR bump. Without it, publish-guard refuses '-Bump major':
   # a stray '-Bump major' shipped @dloizides/auth-client@4.0.0 with an API identical to 3.4.1.
-  [switch]$AllowMajor
+  [switch]$AllowMajor,
+
+  # Skip the post-publish apps/ui-showcase sync + ui.dloizides.com redeploy (also: env SKIP_SHOWCASE_SYNC=1).
+  [switch]$SkipShowcase
 )
 
 Set-StrictMode -Version Latest
@@ -222,6 +225,8 @@ try {
 
   Write-Host ""
   Write-Host "Successfully published $packageName@$newVersion to npm!" -ForegroundColor Green
+  # SHOWCASE-1e: bump apps/ui-showcase + redeploy ui.dloizides.com. Never fails the publish.
+  try { $showcaseSync = Join-Path $PSScriptRoot "..\..\..\personalServerNotes\scripts\showcase-sync.ps1"; if (Test-Path $showcaseSync) { & $showcaseSync -PackageName $packageName -Version $newVersion -Skip:$SkipShowcase } else { Write-Warning "showcase-sync.ps1 not found at $showcaseSync - ui.dloizides.com NOT synced to $packageName@$newVersion" } } catch { Write-Warning "SHOWCASE SYNC FAILED (the package is already live on the registry): $_" }
 }
 catch {
   # The bump is already committed: rolling package.json back here would re-dirty the tree

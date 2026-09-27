@@ -8,13 +8,26 @@
  * types. Every network helper returns `null`/false on failure so specs `test.skip` gracefully in
  * environments where the target isn't reachable, rather than false-failing.
  */
+import { randomInt } from 'node:crypto';
 import type { APIRequestContext, APIResponse } from '@playwright/test';
+
+/**
+ * Strip trailing slashes without a regex — `/\/+$/` is the classic unanchored-quantifier-before-`$`
+ * shape that backtracks super-linearly on a pathological run of slashes (sonarjs/super-linear-regex).
+ */
+function stripTrailingSlashes(value: string): string {
+  let end = value.length;
+  while (end > 0 && value[end - 1] === '/') {
+    end -= 1;
+  }
+  return value.slice(0, end);
+}
 
 /** Resolve a base URL from an env var (trailing slashes trimmed), falling back to a default. */
 export function resolveBaseUrl(envVar: string, fallback: string): string {
   const value = process.env[envVar];
   const chosen = value && value.trim() ? value.trim() : fallback;
-  return chosen.replace(/\/+$/, '');
+  return stripTrailingSlashes(chosen);
 }
 
 export interface TryRequestOptions {
@@ -62,11 +75,11 @@ export function jsonAuth(token: string): Record<string, string> {
 /** Derive the Keycloak base URL (no `/realms/...`) from `KEYCLOAK_URL` or `KEYCLOAK_ISSUER`. */
 export function resolveKeycloakBaseUrl(): string | null {
   const explicit = process.env.KEYCLOAK_URL?.trim();
-  if (explicit) return explicit.replace(/\/+$/, '');
+  if (explicit) {return stripTrailingSlashes(explicit);}
   const issuer = process.env.KEYCLOAK_ISSUER?.trim();
-  if (!issuer) return null;
+  if (!issuer) {return null;}
   const match = /^(.*?)\/realms\/[^/]+/.exec(issuer);
-  return match?.[1] ? match[1].replace(/\/+$/, '') : null;
+  return match?.[1] ? stripTrailingSlashes(match[1]) : null;
 }
 
 export interface RealmTokenOptions {
@@ -89,7 +102,7 @@ export async function getRealmToken(realm: string, options: RealmTokenOptions): 
   const kcBase = options.keycloakBaseUrl ?? resolveKeycloakBaseUrl();
   const username = options.username?.trim();
   const password = options.password?.trim();
-  if (!kcBase || !username || !password || !options.clientId) return null;
+  if (!kcBase || !username || !password || !options.clientId) {return null;}
 
   const fields: Record<string, string> = {
     grant_type: 'password',
@@ -98,7 +111,7 @@ export async function getRealmToken(realm: string, options: RealmTokenOptions): 
     password,
     scope: options.scope ?? 'openid',
   };
-  if (options.clientSecret) fields.client_secret = options.clientSecret;
+  if (options.clientSecret) {fields.client_secret = options.clientSecret;}
 
   try {
     const res = await fetch(`${kcBase}/realms/${realm}/protocol/openid-connect/token`, {
@@ -106,7 +119,7 @@ export async function getRealmToken(realm: string, options: RealmTokenOptions): 
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(fields).toString(),
     });
-    if (!res.ok) return null;
+    if (!res.ok) {return null;}
     const body = (await res.json()) as { access_token?: string };
     return body.access_token ?? null;
   } catch {
@@ -144,7 +157,7 @@ export function deriveUsername(email: string): string {
 
 /** A unique email per run (timestamp + random) so each register creates a fresh tenant. */
 export function uniqueEmail(prefix = 'e2e'): string {
-  const stamp = `${Date.now().toString(36)}${Math.floor(Math.random() * 1_000_000).toString(36)}`;
+  const stamp = `${Date.now().toString(36)}${randomInt(1_000_000).toString(36)}`;
   return `${prefix}-${stamp}@example.com`;
 }
 

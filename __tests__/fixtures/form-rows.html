@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<style>
+  body { font: 13px/1.4 sans-serif; margin: 24px; }
+  .row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 24px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .label-line { visibility: hidden; }
+  input, select, button { box-sizing: border-box; height: 44px; margin: 0; font: inherit; }
+</style>
+</head>
+<body>
+  <div class="row" data-testid="aligned-row">
+    <div class="field"><label for="a1">Email</label><input id="a1" data-testid="email" /></div>
+    <div class="field"><label for="a2">Tier</label><select id="a2" data-testid="tier"><option>Free</option></select></div>
+    <div class="field"><span class="label-line" aria-hidden="true">&nbsp;</span><button data-testid="send">Send</button></div>
+  </div>
+  <div class="row" data-testid="planted-row">
+    <div class="field"><label for="b1">Email</label><input id="b1" data-testid="email-2" /></div>
+    <div class="field"><label for="b2">Tier</label><select id="b2" data-testid="tier-2"><option>Free</option></select></div>
+    <div class="field"><button data-testid="send-on-label-line">Send</button></div>
+  </div>
+  <div class="row" data-testid="short-button-row">
+    <div class="field"><label for="c1">Code</label><input id="c1" data-testid="code" /></div>
+    <div class="field"><label for="c2">City</label><input id="c2" data-testid="city" /></div>
+    <div class="field"><span class="label-line" aria-hidden="true">&nbsp;</span><button data-testid="apply-short" style="height: 36px">Apply</button></div>
+  </div>
+</body>
+</html>

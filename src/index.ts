@@ -171,3 +171,12 @@ export function csvMultipart(
 ): { file: { name: string; mimeType: string; buffer: Buffer } } {
   return { file: { name: filename, mimeType: 'text/csv', buffer: Buffer.from(csv, 'utf-8') } };
 }
+
+export {
+  FIELD_ALIGNMENT_DEFAULT_TOLERANCE_PX,
+  FIELD_CONTROL_SELECTOR,
+  expectFieldsAligned,
+  findMisalignedControls,
+  formatMisalignment,
+} from './fieldAlignment';
+export type { ControlBox, ExpectFieldsAlignedOptions, FieldAlignmentOffender } from './fieldAlignment';

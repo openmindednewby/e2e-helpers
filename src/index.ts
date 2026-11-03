@@ -192,3 +192,25 @@ export type {
   RealTenantGuardOptions,
   SessionProbePaths,
 } from './realTenantGuardTypes';
+
+export { BotMailbox, loadBotMailboxConfig, loadMailboxConfig } from './botMailbox';
+export type { BotMailboxOptions, MailboxConfig, WaitForMessageOptions } from './botMailbox';
+export {
+  decodeMailSource,
+  extractLink,
+  extractResetToken,
+  extractResetUrl,
+  extractUnsubscribeUrl,
+  extractVerifyUrl,
+  tokenOfLink,
+} from './mailMessage';
+export type { CapturedEmail } from './mailMessage';
+export { createTestAccount } from './createTestAccount';
+export { TestAccountError, TestAccountStage } from './testAccountTypes';
+export type {
+  CreateTestAccountOptions,
+  DisposedTestAccount,
+  TestAccount,
+  TestAccountContext,
+  TestAccountMailbox,
+} from './testAccountTypes';

@@ -49,3 +49,7 @@ test('rejects an unauthenticated screening @aml-api', async ({ request }) => {
 
 Every network helper returns `null`/false on failure so specs **skip, not fail** where the target
 isn't reachable — safe on the dev PC, meaningful on the nightly in-cluster runner.
+
+## Per-run test accounts
+
+`createTestAccount({ app, baseUrl })` signs up through `/bff/register`, follows the real email from the `e2e-bot` mailbox (`E2E_BOT_MAILBOX_PASSWORD`), signs in through `/bff/verify-and-login` and returns `{ email, password, tenantId, context, dispose }`. `dispose()` runs `/bff/account/delete-request` and the emailed confirm link. A failure throws `TestAccountError` naming its stage.

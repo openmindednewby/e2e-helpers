@@ -185,6 +185,7 @@ export { bffLogin } from './bffLogin';
 export { fixedTenantCredentials } from './fixedTenantCredentials';
 export type { BffCredentials } from './fixedTenantCredentials';
 export { RealTenantGuard } from './realTenantGuard';
+export { UnsupportedPlaywrightVersionError } from './playwrightClientModule';
 export type {
   BearerProbeClient,
   LoginRefusalSink,

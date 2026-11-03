@@ -28,7 +28,7 @@ npm i -D @dloizides/e2e-helpers
 - `bffLogin(page, creds)`: same-origin `POST /bff/login` from inside the page; throws with status and body preview.
 - `fixedTenantCredentials(...envPrefixes)`: `<PREFIX>_USERNAME` / `<PREFIX>_PASSWORD`, first prefix that sets each.
 - `new RealTenantGuard(options)`: `.install()` refuses test writes and logins on protected tenants; call it from `playwright.config.ts`. First `install()` in a process wins.
-  `install()` patches `playwright-core/lib/client`, tested on Playwright 1.57.0; a bundled build without that folder (1.62.1) throws at install.
+  `install()` patches `playwright-core/lib/client`, tested on Playwright 1.57.0; from 1.60 that folder is gone and `install()` throws `UnsupportedPlaywrightVersionError` naming the version and the supported range (`>=1.40.0 <1.60.0`). The other helpers do not touch it and work on 1.64.
 
 ## Example (`@api` spec)
 

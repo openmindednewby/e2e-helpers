@@ -1,5 +1,3 @@
-import { dirname, join } from 'node:path';
-
 import { expect, test } from '@playwright/test';
 
 import type {
@@ -12,6 +10,7 @@ import type {
   ResponseLike,
   RouteLike,
 } from './realTenantGuardTypes';
+import { clientModule } from './playwrightClientModule';
 
 const READ_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 const PATCHED = Symbol.for('e2e.real-tenant-guard.patched');
@@ -50,12 +49,6 @@ function failCurrentTest(message: string): void {
     throw new Error(message);
   }
   expect.soft(message, message).toBe('');
-}
-
-function clientModule<T>(file: string): T {
-  const nodeRequire = require;
-  const root = dirname(nodeRequire.resolve('playwright-core/package.json'));
-  return nodeRequire(join(root, 'lib', 'client', file)) as T;
 }
 
 /** Refuses test writes and logins on protected tenants; the first `install()` in a process wins. */

@@ -2,6 +2,12 @@
 
 All notable changes to `@dloizides/e2e-helpers` are documented here.
 
+## [1.2.1] - 2026-11-03
+
+### Fixed
+- `RealTenantGuard.install()` from the `.mjs` entry threw `nodeRequire.resolve is not a function`; it now loads Playwright through `createRequire`.
+- `install()` on Playwright without `lib/client/browser.js` (1.60+) throws `UnsupportedPlaywrightVersionError` naming the version and the supported range, instead of a raw module error. The peer range stays `>=1.40.0`: the other helpers work on 1.64.
+
 ## [1.2.0] - 2026-11-03
 
 ### Added

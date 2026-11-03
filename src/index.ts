@@ -4,7 +4,7 @@
  * helpers (ichnos-helpers, aml-helpers, agora, …): reachability, ROPC realm tokens, auth headers,
  * health polling, multipart CSV, and username/email derivation.
  *
- * Playwright is a PEER dependency — the consuming E2E suite provides it; this package only imports its
+ * Playwright is a PEER dependency — the consuming E2E suite provides it; only `RealTenantGuard` imports it at runtime, the rest imports its
  * types. Every network helper returns `null`/false on failure so specs `test.skip` gracefully in
  * environments where the target isn't reachable, rather than false-failing.
  */
@@ -180,3 +180,14 @@ export {
   formatMisalignment,
 } from './fieldAlignment';
 export type { ControlBox, ExpectFieldsAlignedOptions, FieldAlignmentOffender } from './fieldAlignment';
+
+export { bffLogin } from './bffLogin';
+export { fixedTenantCredentials } from './fixedTenantCredentials';
+export type { BffCredentials } from './fixedTenantCredentials';
+export { RealTenantGuard } from './realTenantGuard';
+export type {
+  BearerProbeClient,
+  LoginRefusalSink,
+  RealTenantGuardOptions,
+  SessionProbePaths,
+} from './realTenantGuardTypes';

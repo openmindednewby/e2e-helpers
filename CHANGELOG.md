@@ -2,6 +2,17 @@
 
 All notable changes to `@dloizides/e2e-helpers` are documented here.
 
+## [1.2.0] - 2026-11-03
+
+### Added
+- `bffLogin(page, creds)`: same-origin `POST /bff/login` from inside the page (E2E-STD-1 "One E2E standard").
+- `fixedTenantCredentials(...envPrefixes)`: reads `<PREFIX>_USERNAME` / `<PREFIX>_PASSWORD`, first prefix that sets each.
+- `RealTenantGuard`: refuses test writes and logins on protected tenants; slugs, host patterns, session probe paths and advice text are options. TEST-TENANT-1 "Tests never write to a real customer tenant".
+
+### Changed
+- The package entry now imports `@playwright/test` at runtime (for `RealTenantGuard`); it stays a peer dependency.
+- Dev dependency `@playwright/test` pinned to 1.57.0, the version `RealTenantGuard.install()` patches; 1.62.1 has no `playwright-core/lib/client` and throws at install.
+
 ## [1.1.0] - 2026-10-25
 
 ### Added

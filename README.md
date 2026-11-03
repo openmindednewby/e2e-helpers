@@ -25,6 +25,11 @@ npm i -D @dloizides/e2e-helpers
 | `deriveUsername(email)` / `uniqueEmail(prefix?)` | Keycloak-legal username + unique register email |
 | `csvMultipart(csv, filename?)` | Playwright multipart body for a CSV upload (`file` field) |
 
+- `bffLogin(page, creds)`: same-origin `POST /bff/login` from inside the page; throws with status and body preview.
+- `fixedTenantCredentials(...envPrefixes)`: `<PREFIX>_USERNAME` / `<PREFIX>_PASSWORD`, first prefix that sets each.
+- `new RealTenantGuard(options)`: `.install()` refuses test writes and logins on protected tenants; call it from `playwright.config.ts`. First `install()` in a process wins.
+  `install()` patches `playwright-core/lib/client`, tested on Playwright 1.57.0; from 1.60 that folder is gone and `install()` throws `UnsupportedPlaywrightVersionError` naming the version and the supported range (`>=1.40.0 <1.60.0`). The other helpers do not touch it and work on 1.64.
+
 ## Example (`@api` spec)
 
 ```ts

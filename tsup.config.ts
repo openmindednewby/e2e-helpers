@@ -11,6 +11,7 @@ export default defineConfig({
   minify: false,
   target: 'es2020',
   outDir: 'dist',
+  shims: true,
   // @playwright/test is a peer dependency — never bundle it into the lib.
   external: ['@playwright/test'],
 });

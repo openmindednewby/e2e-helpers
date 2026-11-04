@@ -2,6 +2,15 @@
 
 All notable changes to `@dloizides/e2e-helpers` are documented here.
 
+## [1.3.0] - 2026-11-03
+
+### Added
+- `createTestAccount({ app, baseUrl })`: a real account through `/bff/register` (with `formElapsedMs`), the emailed link and `/bff/verify-and-login`, on a new tenant; `dispose()` runs `/bff/account/delete-request` and the emailed confirm link. REGISTER-2 "One shared registration path".
+- `BotMailbox`, `loadBotMailboxConfig`, `loadMailboxConfig`: the IMAP poller moved from E2ETests `kefiMailboxClient.ts`, with `extractLink`, `tokenOfLink`, `decodeMailSource` and the old extractors. Bodies are now MIME-decoded, so a quoted-printable `token=3D...` reads as `token=...`.
+
+### Changed
+- New runtime dependency `imapflow`.
+
 ## [1.2.1] - 2026-11-03
 
 ### Fixed

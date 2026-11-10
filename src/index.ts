@@ -181,6 +181,9 @@ export {
 } from './fieldAlignment';
 export type { ControlBox, ExpectFieldsAlignedOptions, FieldAlignmentOffender } from './fieldAlignment';
 
+export { worstPaintedTextContrast } from './paintedContrast';
+export type { PaintedContrastOptions } from './paintedContrast';
+
 export { bffLogin } from './bffLogin';
 export { fixedTenantCredentials } from './fixedTenantCredentials';
 export type { BffCredentials } from './fixedTenantCredentials';

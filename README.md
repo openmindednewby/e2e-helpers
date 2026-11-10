@@ -25,6 +25,7 @@ npm i -D @dloizides/e2e-helpers
 | `deriveUsername(email)` / `uniqueEmail(prefix?)` | Keycloak-legal username + unique register email |
 | `csvMultipart(csv, filename?)` | Playwright multipart body for a CSV upload (`file` field) |
 
+- `worstPaintedTextContrast(page, { textSelector, hideCss? })`: lowest WCAG contrast between matched text and the pixels painted under it in the viewport; throws when no matched text is visible. `hideCss` replaces the default rule that hides the matched text for the screenshot. Needs a page that allows inline styles and `data:` images, or a context with `bypassCSP`.
 - `bffLogin(page, creds)`: same-origin `POST /bff/login` from inside the page; throws with status and body preview.
 - `fixedTenantCredentials(...envPrefixes)`: `<PREFIX>_USERNAME` / `<PREFIX>_PASSWORD`, first prefix that sets each.
 - `new RealTenantGuard(options)`: `.install()` refuses test writes and logins on protected tenants; call it from `playwright.config.ts`. First `install()` in a process wins.

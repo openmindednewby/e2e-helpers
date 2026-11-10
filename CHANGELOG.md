@@ -2,6 +2,11 @@
 
 All notable changes to `@dloizides/e2e-helpers` are documented here.
 
+## [1.4.0] - 2026-11-11
+
+### Added
+- `worstPaintedTextContrast(page, { textSelector, hideCss? })`: lowest WCAG contrast between each visible matched text colour and the pixels painted under it in the viewport. Throws when no matched text is visible. MOONCUBE-SITE-3 "Stunning background, DevOps experience and ISO 27001 controls".
+
 ## [1.3.0] - 2026-11-03
 
 ### Added
